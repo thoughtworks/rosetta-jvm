@@ -1,6 +1,6 @@
 import SimpleHTTPServer
 import SocketServer
-import scraper
+from main.python.jigscraper import scraper
 
 class MyRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def do_GET(self):
