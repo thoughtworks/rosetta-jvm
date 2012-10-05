@@ -1,6 +1,6 @@
-waldo = waldo || {}
+window.waldo = window.waldo || {}
 
-waldo.location = (->
+window.waldo.location = (->
   geocoder = new google.maps.Geocoder()
   coordinatesFor = (cityName, callback) ->
     geocoder.geocode({ 'address': cityName }, (results) ->
