@@ -53,8 +53,9 @@ waldo.globe = (function () {
     initialAltitude = lookAt.getAltitude();
 
     globe.getFeatures().appendChild(placemarkFor("San Francisco Office", 37.76944, -122.43444));
+    globe.getFeatures().appendChild(placemarkFor("Chicago Office", 41.88194, -87.62778));
 
-//    google.earth.addEventListener(globe, "frameend", rotateEarth);
+    //    google.earth.addEventListener(globe, "frameend", rotateEarth);
   }
 
   function rotateEarth() {
@@ -64,12 +65,12 @@ waldo.globe = (function () {
     lastMillis = now;
     var lookAt = globe.getView().copyAsLookAt(globe.ALTITUDE_ABSOLUTE);
     lookAt.setLongitude(lookAt.getLongitude() + speed * dt);
-    lookAt.setHeading(0);   // Workaround for heading bug, issue #148
+    lookAt.setHeading(0);
     lookAt.setAltitude(initialAltitude);
     globe.getView().setAbstractView(lookAt);
   }
 
   return {
-    initialise: initialise
+    initialise:initialise
   }
 })();

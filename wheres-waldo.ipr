@@ -17,6 +17,9 @@
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
@@ -66,6 +69,7 @@
   <component name="GradleUISettings2">
     <setting name="root" />
   </component>
+  <component name="IdProvider" IDEtalkID="3F0526635FD9A241AEA899010754EF7E" />
   <component name="IvyIDEA.ProjectSettings">
     <option name="artifactTypeSettings">
       <ArtifactTypeSettings />
