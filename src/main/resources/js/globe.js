@@ -10,10 +10,39 @@ waldo.globe = (function () {
 
   function initialise() {
     google.earth.createInstance("map3d", initialiseCallback, failureCallback);
-    toggleButtons("start");
   }
 
   function failureCallback(object) {
+  }
+
+  function icon() {
+    var icon = globe.createIcon('');
+    icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+    return icon;
+  }
+
+  function style() {
+    var style = globe.createStyle('');
+    style.getIconStyle().setIcon(icon());
+    style.getIconStyle().setScale(2.0);
+    return style;
+  }
+
+  function pointFor(latitude, longitude) {
+    var point = globe.createPoint('');
+    point.setLatitude(latitude);
+    point.setLongitude(longitude);
+    return point;
+  }
+
+  function placemarkFor(location, latitude, longitude) {
+    var placemark = globe.createPlacemark('');
+
+    placemark.setName(location);
+    placemark.setGeometry(pointFor(latitude, longitude));
+    placemark.setStyleSelector(style());
+
+    return placemark;
   }
 
   function initialiseCallback(object) {
@@ -23,26 +52,9 @@ waldo.globe = (function () {
     var lookAt = globe.getView().copyAsLookAt(globe.ALTITUDE_ABSOLUTE);
     initialAltitude = lookAt.getAltitude();
 
-    var placemark = globe.createPlacemark('');
-    placemark.setName("San Francisco Office");
-    globe.getFeatures().appendChild(placemark);
+    globe.getFeatures().appendChild(placemarkFor("San Francisco Office", 37.76944, -122.43444));
 
-    // Create style map for placemark
-    var icon = globe.createIcon('');
-    icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
-    var style = globe.createStyle('');
-    style.getIconStyle().setIcon(icon);
-    style.getIconStyle().setScale(15.0);
-    placemark.setStyleSelector(style);
-
-    // Create point
-    // var la = globe.getView().copyAsLookAt(globe.ALTITUDE_RELATIVE_TO_GROUND);
-    var point = globe.createPoint('');
-    point.setLatitude(37.76944);
-    point.setLongitude(-122.43444);
-    placemark.setGeometry(point);
-
-    google.earth.addEventListener(globe, "frameend", rotateEarth);
+//    google.earth.addEventListener(globe, "frameend", rotateEarth);
   }
 
   function rotateEarth() {
@@ -55,18 +67,6 @@ waldo.globe = (function () {
     lookAt.setHeading(0);   // Workaround for heading bug, issue #148
     lookAt.setAltitude(initialAltitude);
     globe.getView().setAbstractView(lookAt);
-  }
-
-  function toggleButtons(val) {
-    form = document.forms[0];
-    if (val == "start") {
-      form.start.disabled = true;
-      form.stop.disabled = false;
-    }
-    if (val == "stop") {
-      form.start.disabled = false;
-      form.stop.disabled = true;
-    }
   }
 
   return {
