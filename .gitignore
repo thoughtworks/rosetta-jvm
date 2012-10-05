@@ -5,3 +5,4 @@ cookie
 .gradle/
 build/
 .sass-cache/
+*$py.class

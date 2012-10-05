@@ -6,16 +6,16 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 configurations {
-    cucumberRuntime {
-        extendsFrom testRuntime
-    }
+  cucumberRuntime {
+    extendsFrom testRuntime
+  }
 }
 
 repositories {
-    maven {
-      url "http://gemjars.org/maven"
-    }
-    mavenCentral()
+  maven {
+    url "http://gemjars.org/maven"
+  }
+  mavenCentral()
 }
 
 dependencies {
@@ -28,22 +28,47 @@ dependencies {
   compile 'org.rubygems:therubyrhino:2.0.0'
   compile 'org.rubygems:less:2.2.1'
 
+  compile 'org.python:jython-standalone:2.5.3'
+
   testCompile 'junit:junit:4.10',
       'info.cukes:cucumber-core:1.0.14',
       'info.cukes:cucumber-java:1.0.14',
       'info.cukes:cucumber-junit:1.0.14'
 }
 
-task cucumberRuntime(dependsOn: assemble) << {
-    javaexec {
-        main = "cucumber.cli.Main"
-        classpath = configurations.cucumberRuntime
-        args = ["-f", "pretty", "--glue", "src/test/java", "src/test/resources"]
+sourceSets {
+  main {
+    resources {
+      srcDirs 'src/main/python', 'src/main/resources'
     }
+  }
 }
 
-task(gearup, type: JavaExec) {
+task cucumberRuntime(dependsOn: assemble) << {
+  javaexec {
+    main = "cucumber.cli.Main"
+    classpath = configurations.cucumberRuntime
+    args = ["-f", "pretty", "--glue", "src/test/java", "src/test/resources"]
+  }
+}
+
+task(assets, type: JavaExec) {
   classpath runtimeClasspath
   main = "org.jruby.Main"
   args = ["classpath:bin/gearup", "src/main/resources"]
+}
+
+task(service, type: JavaExec) {
+  classpath runtimeClasspath
+  environment([
+      'JYTHONPATH': sourceSets.main.resources.srcDirs.collect { it.toString() }.join(":")
+  ])
+  main = "org.python.util.jython"
+  args = ["src/main/python/jigscraper/webservice.py", System.getProperty("username"), System.getProperty("rsa.token")]
+}
+
+task(jythonHelp, type: JavaExec) {
+  classpath runtimeClasspath
+  main = "org.python.util.jython"
+  args = ["--help"]
 }

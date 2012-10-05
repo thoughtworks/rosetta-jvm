@@ -1,6 +1,7 @@
+import sys
 import SimpleHTTPServer
 import SocketServer
-from main.python.jigscraper import scraper
+from jigscraper import scraper
 
 class MyRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def do_GET(self):
@@ -12,7 +13,7 @@ class MyRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     self.wfile.write(scraper.idToPic(id))
     return
 
-scraper.login()
+scraper.login(sys.argv[1], sys.argv[2])
 Handler = MyRequestHandler
 server = SocketServer.TCPServer(('0.0.0.0', 8000), Handler)
 

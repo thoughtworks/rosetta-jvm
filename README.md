@@ -6,10 +6,16 @@ Let's find those pesky SF TWers.
 Usage
 =====
 
-Execute the following at a command prompt:
+First start up the scraper service using:
 
 ```
-$ gradle gearup
+$ gradle service -Dusername=<your-username> -Drsa.token=<a-one-time-rsa-token>
 ```
 
-and navigate to http://localhost:3000/html/wheres-waldo.html.
+Then, execute the following at a command prompt:
+
+```
+$ gradle assets
+```
+
+and navigate to [http://localhost:3000/html/wheres-waldo.html](http://localhost:3000/html/wheres-waldo.html).

@@ -50,13 +50,13 @@ def getforms(s):
     l.append(re.search('onsubmit="(.+?)"', i))
     print "%s\t\t%s\t\t%s"%tuple((x.groups()[0] if x else "" for x in l))
 
-def login():
+def login(username, passtoken):
   p=getpage("https://jigsaw.thoughtworks.com/")
   if "<title>Jigsaw" in p  : return 
   
   i=getinputs(p)
-  i["username"] = raw_input("your tw usar name: ")
-  i["password"] = raw_input("your rsa token: ")
+  i["username"] = username
+  i["password"] = passtoken
   getpage("https://cas.thoughtworks.com/cas/login?service=https%3A%2F%2Fjigsaw.thoughtworks.com%2F", i)
   cookieJar.save("cookie")
 
@@ -68,5 +68,5 @@ def idToPic(id):
 
 if __name__=="__main__":
   import sys
-  login()
-  open("picture.jpg", "w").write(idToPic(sys.argv[1]))
+  login(sys.argv[1], sys.argv[2])
+  open("picture.jpg", "w").write(idToPic(sys.argv[3]))
