@@ -10,7 +10,7 @@ class MyRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     self.send_response(200)
     self.send_header('Content-type', 'image/jpeg')
     self.end_headers()
-    self.wfile.write(scraper.idToPic(id))
+    self.wfile.write(scraper.profilePictureFor(id))
     return
 
 scraper.login(sys.argv[1], sys.argv[2])
