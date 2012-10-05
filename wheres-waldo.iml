@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/python" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/ioke" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
@@ -84,6 +85,24 @@
         <SOURCES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-13/filestore/org.python/jython-standalone/2.5.3/source/9a0a0a8b61d3ad0735dd90ff3525338174897124/jython-standalone-2.5.3-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-13/filestore/org.ioke/ioke-lang/P-0.4.0-p11/jar/138665232d7e4481587f4d10a41681399ab4b05d/ioke-lang-P-0.4.0-p11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-13/filestore/org.ioke/ioke-lang-lib/P-0.4.0-p11/jar/534fbb4f64520186035a908f5036689278ace388/ioke-lang-lib-P-0.4.0-p11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">

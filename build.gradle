@@ -30,6 +30,9 @@ dependencies {
 
   compile 'org.python:jython-standalone:2.5.3'
 
+  compile 'org.ioke:ioke-lang:P-0.4.0-p11'
+  compile 'org.ioke:ioke-lang-lib:P-0.4.0-p11'
+
   testCompile 'junit:junit:4.10',
       'info.cukes:cucumber-core:1.0.14',
       'info.cukes:cucumber-java:1.0.14',
@@ -39,7 +42,7 @@ dependencies {
 sourceSets {
   main {
     resources {
-      srcDirs 'src/main/python', 'src/main/resources'
+      srcDirs 'src/main/ioke', 'src/main/python', 'src/main/resources'
     }
   }
 }
@@ -70,5 +73,17 @@ task(service, type: JavaExec) {
 task(jythonHelp, type: JavaExec) {
   classpath runtimeClasspath
   main = "org.python.util.jython"
+  args = ["--help"]
+}
+
+task(iokeRun, type: JavaExec) {
+  classpath runtimeClasspath
+  main = "ioke.lang.Main"
+  args = ["--", "src/main/ioke/helloworld.ik"]
+}
+
+task(iokeHelp, type: JavaExec) {
+  classpath runtimeClasspath
+  main = "ioke.lang.Main"
   args = ["--help"]
 }

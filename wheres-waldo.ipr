@@ -185,6 +185,7 @@
         <w>attributematch</w>
         <w>betterinputs</w>
         <w>gradle</w>
+        <w>println</w>
       </words>
     </dictionary>
   </component>
