@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+//build stuff
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    testCompile'junit:junit:4.10',
+                'info.cukes:cucumber-core:1.0.14',
+                'info.cukes:cucumber-java:1.0.14',
+                'info.cukes:cucumber-junit:1.0.14'
+}
+
+task cucumberRuntime(dependsOn: assemble) << {
+    javaexec {
+        main = "cucumber.cli.Main"
+        classpath = configurations.cucumberRuntime
+        args = ["-f", "pretty", "--glue", "src/test/java", "src/test/resources"]
+    }
+}
