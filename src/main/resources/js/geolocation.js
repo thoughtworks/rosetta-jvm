@@ -12,7 +12,7 @@ waldo.location = (function(){
             };
         k(outLocation);
       });
-  }
+  };
 
   return {
     coordinatesFor: coordinatesFor
