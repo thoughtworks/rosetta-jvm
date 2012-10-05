@@ -1,8 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'maven'
 
-//build stuff
+// build stuff
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
@@ -45,6 +44,6 @@ task cucumberRuntime(dependsOn: assemble) << {
 
 task(gearup, type: JavaExec) {
   classpath runtimeClasspath
-  main 'org.jruby.Main'
-  args 'classpath:bin/gearup', 'src/main/resources'
+  main = "org.jruby.Main"
+  args = ["classpath:bin/gearup", "src/main/resources"]
 }
