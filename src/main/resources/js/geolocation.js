@@ -1,8 +1,8 @@
-if (typeof waldo === "undefined") { waldo = {}; }
+var waldo = waldo || {};
 
 waldo.location = (function(){
   var geocoder = new google.maps.Geocoder();
-  var coordinatesFor = function(cityName, k, error) {
+  var coordinatesFor = function (cityName, callback) {
     geocoder.geocode({ 'address': cityName },
       function(results) {
         var location = results[0].geometry.location,
@@ -10,7 +10,7 @@ waldo.location = (function(){
               lat: location.Xa,
               long: location.Ya
             };
-        k(outLocation);
+        callback(outLocation);
       });
   };
 
