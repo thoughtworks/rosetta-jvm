@@ -27,13 +27,20 @@ waldo.globe = (function () {
     placemark.setName("San Francisco Office");
     globe.getFeatures().appendChild(placemark);
 
-    // Create style map for placemark
+    var placemark2 = globe.createPlacemark('');
+    placemark2.setName("Chicago Office");
+    globe.getFeatures().appendChild(placemark2);
+
+
+      // Create style map for placemark
     var icon = globe.createIcon('');
     icon.setHref('http://maps.google.com/mapfiles/kml/paddle/red-circle.png');
+
     var style = globe.createStyle('');
     style.getIconStyle().setIcon(icon);
     style.getIconStyle().setScale(15.0);
     placemark.setStyleSelector(style);
+    placemark2.setStyleSelector(style);
 
     // Create point
     // var la = globe.getView().copyAsLookAt(globe.ALTITUDE_RELATIVE_TO_GROUND);
@@ -41,6 +48,11 @@ waldo.globe = (function () {
     point.setLatitude(37.76944);
     point.setLongitude(-122.43444);
     placemark.setGeometry(point);
+
+    var point2 = globe.createPoint('');
+    point2.setLatitude(41.88194);
+    point2.setLongitude(-87.62778);
+    placemark2.setGeometry(point2);
 
     google.earth.addEventListener(globe, "frameend", rotateEarth);
   }
