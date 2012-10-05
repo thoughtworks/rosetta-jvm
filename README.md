@@ -12,4 +12,4 @@ Execute the following at a command prompt:
 $ gradle gearup
 ```
 
-and navigate to http://localhost:3000/html/wheres-waldo.html.
+and navigate to [http://localhost:3000/html/wheres-waldo.html](http://localhost:3000/html/wheres-waldo.html).
