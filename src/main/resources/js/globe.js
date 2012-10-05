@@ -9,7 +9,7 @@ waldo.globe = (function () {
   var initialAltitude;
 
   function initialise() {
-    google.earth.createInstance("map3d", initialiseCallback, failureCallback);
+    google.earth.createInstance("globe", initialiseCallback, failureCallback);
   }
 
   function failureCallback(object) {
@@ -55,7 +55,7 @@ waldo.globe = (function () {
     globe.getFeatures().appendChild(placemarkFor("San Francisco Office", 37.76944, -122.43444));
     globe.getFeatures().appendChild(placemarkFor("Chicago Office", 41.88194, -87.62778));
 
-    //    google.earth.addEventListener(globe, "frameend", rotateEarth);
+    google.earth.addEventListener(globe, "frameend", rotateEarth);
   }
 
   function rotateEarth() {
