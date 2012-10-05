@@ -4,3 +4,4 @@
 cookie
 .gradle/
 build/
+.sass-cache/
