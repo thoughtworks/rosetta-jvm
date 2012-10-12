@@ -1,7 +1,7 @@
-Where's Waldo?
-==============
+Rosetta JVM
+===========
 
-Let's find those pesky SF TWers.
+Example project using GitHub data to create visualisations integrating many many JVM languages in the same codebase.
 
 Usage
 =====
