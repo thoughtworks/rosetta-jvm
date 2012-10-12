@@ -6,9 +6,7 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 configurations {
-  cucumberRuntime {
-    extendsFrom testRuntime
-  }
+  rspec
 }
 
 repositories {
@@ -33,25 +31,20 @@ dependencies {
   compile 'org.ioke:ioke-lang:P-0.4.0-p11'
   compile 'org.ioke:ioke-lang-lib:P-0.4.0-p11'
 
-  testCompile 'junit:junit:4.10',
-      'info.cukes:cucumber-core:1.0.14',
-      'info.cukes:cucumber-java:1.0.14',
-      'info.cukes:cucumber-junit:1.0.14'
+  rspec 'org.jruby:jruby-complete:1.6.7.2'
+  rspec 'org.rubygems:rspec:2.10.0'
 }
 
 sourceSets {
   main {
     resources {
-      srcDirs 'src/main/ioke', 'src/main/python', 'src/main/resources'
+      srcDirs 'src/main/ioke', 'src/main/python', 'src/main/ruby', 'src/main/resources'
     }
   }
-}
-
-task cucumberRuntime(dependsOn: assemble) << {
-  javaexec {
-    main = "cucumber.cli.Main"
-    classpath = configurations.cucumberRuntime
-    args = ["-f", "pretty", "--glue", "src/test/java", "src/test/resources"]
+  test {
+    resources {
+      srcDirs 'src/test/ruby'
+    }
   }
 }
 
@@ -87,3 +80,10 @@ task(iokeHelp, type: JavaExec) {
   main = "ioke.lang.Main"
   args = ["--help"]
 }
+
+task(rspec, type: JavaExec) {
+  main 'org.jruby.Main'
+  classpath configurations.rspec + test.classpath
+  args = ['classpath:bin/rspec', 'src/test/ruby']
+}
+
