@@ -3,6 +3,7 @@
 *.pyc
 cookie
 .gradle/
+out
 build/
 .sass-cache/
 *$py.class

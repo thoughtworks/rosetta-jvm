@@ -16,7 +16,8 @@ module Jython
         end
 
         define_method :method_missing do |name, *args|
-          @instance.invoke(name.to_s).__tojava__ Java::JavaLang::Object.java_class
+          python_args = args.map { |e| Java::OrgPythonCore::Py.java2py(e) }.to_java(Java::OrgPythonCore::PyObject)
+          @instance.invoke(name.to_s, python_args).__tojava__ Java::JavaLang::Object.java_class
         end
       end
     end

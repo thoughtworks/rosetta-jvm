@@ -87,3 +87,6 @@ task(rspec, type: JavaExec) {
   args = ['classpath:bin/rspec', 'src/test/ruby']
 }
 
+idea.module {
+  scopes.RUNTIME.plus += configurations.rspec
+}
