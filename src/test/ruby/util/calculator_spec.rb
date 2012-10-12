@@ -16,4 +16,14 @@ describe Calculator do
   it "should allow methods with primitive arguments to be called" do
     calculator.plus(1, 2).should == 3
   end
+
+  it "should wrap exceptions and extract reason" do
+    expect {
+      calculator.throws_native_exception
+    }.to raise_error(Jython::Exception, /AttributeError/)
+  end
+
+  xit "should expose python class instance methods when #public_methods called" do
+    calculator.public_methods.should include("pi", "plus")
+  end
 end

@@ -1,3 +1,5 @@
+require 'jython/exception'
+
 module Jython
   class Class
     def self.import clazz, opts
@@ -16,8 +18,12 @@ module Jython
         end
 
         define_method :method_missing do |name, *args|
-          python_args = args.map { |e| Java::OrgPythonCore::Py.java2py(e) }.to_java(Java::OrgPythonCore::PyObject)
-          @instance.invoke(name.to_s, python_args).__tojava__ Java::JavaLang::Object.java_class
+          begin
+            python_args = args.map { |e| Java::OrgPythonCore::Py.java2py(e) }.to_java(Java::OrgPythonCore::PyObject)
+            @instance.invoke(name.to_s, python_args).__tojava__ Java::JavaLang::Object.java_class
+          rescue NativeException => exception
+            raise Jython::Exception.new(exception.cause)
+          end
         end
       end
     end
