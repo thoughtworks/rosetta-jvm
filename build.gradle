@@ -1,9 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-// build stuff
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
+
+defaultTasks('check')
 
 configurations {
   rspec
@@ -86,6 +87,8 @@ task(rspec, type: JavaExec) {
   classpath configurations.rspec + test.classpath
   args = ['classpath:bin/rspec', 'src/test/ruby']
 }
+
+check.dependsOn << 'rspec'
 
 idea.module {
   scopes.RUNTIME.plus += configurations.rspec
