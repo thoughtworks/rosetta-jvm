@@ -1,9 +1,0 @@
-%html
-  %head
-    %script{:type => "text/javascript", :src => "http://maps.googleapis.com/maps/api/js?sensor=false"}
-    %script{:type => "text/javascript", :src => "../js/geolocation.js"}
-  %body
-    :javascript
-      waldo.location.coordinatesFor("San Francisco", function(data){
-        console.log(data);
-      });
