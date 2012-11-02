@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+evaluationDependsOn(':service')
+
+dependencies {
+  compile 'org.jruby:jruby-complete:1.6.7.2'
+  compile 'org.rubygems:rspec:2.11.0'
+  compile 'org.rubygems:httparty:0.9.0'
+  compile 'org.rubygems:childprocess:0.3.6'
+}
+
+sourceSets {
+  test {
+    resources {
+      srcDir 'src/test/ruby'
+    }
+  }
+}
+
+task(rspec, type: JavaExec, dependsOn: [":service:distZip"]) {
+  main 'org.jruby.Main'
+  classpath runtimeClasspath
+  args 'classpath:bin/rspec', '-Isrc/test/ruby', 'src/test/ruby'
+
+  environment ARTIFACT: project(":service").distZip.outputs.files.collect { it.canonicalPath }.get(0)
+}
+
+check.dependsOn << "rspec"
