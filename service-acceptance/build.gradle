@@ -25,3 +25,5 @@ task(rspec, type: JavaExec, dependsOn: [":service:distZip"]) {
 
   environment ARTIFACT: project(":service").distZip.outputs.files.collect { it.canonicalPath }.get(0)
 }
+
+check.dependsOn << "rspec"
