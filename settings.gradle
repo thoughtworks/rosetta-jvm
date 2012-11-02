@@ -1,4 +1,5 @@
 rootProject.name = 'rosetta-jvm'
 include(
-  'service'
+  'service',
+  'service-acceptance'
 )
