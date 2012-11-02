@@ -10,6 +10,6 @@ public class Main {
         RubyInstanceConfig config = new RubyInstanceConfig();
         config.setArgv(args);
         Ruby ruby = Ruby.newInstance(config);
-        ruby.evalScriptlet("require 'rubygems'; require 'rosetta/cli'; Rosetta::Command.run");
+        ruby.evalScriptlet("require 'rubygems'; require 'rosetta/cli'; Rosetta::Cli.run");
     }
 }

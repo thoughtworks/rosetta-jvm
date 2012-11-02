@@ -1,7 +1,7 @@
 require 'clamp'
 
 module Rosetta
-  class Command < Clamp::Command
+  class Cli < Clamp::Command
     def execute
     end
   end
