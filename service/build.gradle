@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName = "rosetta.Main"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -19,6 +22,7 @@ dependencies {
   compile 'org.rubygems:execjs:1.4.0'
   compile 'org.rubygems:therubyrhino:2.0.0'
   compile 'org.rubygems:less:2.2.1'
+  compile 'org.rubygems:clamp:0.4.0'
 
   compile 'org.python:jython-standalone:2.5.3'
 
