@@ -1,1 +1,4 @@
-run proc {|env| [200, {}, []]}
+require 'rubygems'
+require 'rosetta/sinatra'
+
+run Rosetta::Sinatra

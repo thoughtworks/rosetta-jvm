@@ -22,6 +22,8 @@ dependencies {
     dependency 'com.jcraft:jzlib:1.1.1'
   }
 
+  compile "org.rubygems:sinatra:1.3.3"
+
   compile "org.jruby:jruby-complete:1.6.7.2"
   compile "org.rubygems:gearup:0.0.5"
   compile 'org.rubygems:sprockets:2.4.5'
