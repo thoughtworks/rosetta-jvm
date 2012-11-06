@@ -23,6 +23,10 @@ dependencies {
   }
 
   compile "org.rubygems:sinatra:1.3.3"
+  compile "org.rubygems:sinatra-contrib:1.3.2"
+
+  compile 'org.codehaus.jackson:jackson-core-lgpl:1.9.0'
+  compile 'org.codehaus.jackson:jackson-mapper-lgpl:1.9.0'
 
   compile "org.jruby:jruby-complete:1.6.7.2"
   compile "org.rubygems:gearup:0.0.5"
