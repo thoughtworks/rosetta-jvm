@@ -1,4 +1,4 @@
-package rosetta;
+package rosetta.boot;
 
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;

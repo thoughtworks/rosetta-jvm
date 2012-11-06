@@ -1,4 +1,4 @@
-package rosetta;
+package rosetta.boot;
 
 import org.jruby.Ruby;
 import org.jruby.RubyInstanceConfig;

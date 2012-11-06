@@ -1,4 +1,6 @@
-package rosetta;
+package rosetta.service;
+
+import rosetta.behaviours.ToJson;
 
 public class Project{
     private final ToJson<Project> toJson;

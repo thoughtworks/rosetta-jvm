@@ -7,7 +7,7 @@ module Rosetta
     end
 
     def execute
-      Java::Rosetta::Application.boot self
+      Java::RosettaBoot::Application.boot self
     end
   end
 end
