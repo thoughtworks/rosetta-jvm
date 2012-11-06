@@ -1,6 +1,7 @@
-package rosetta;
+package rosetta.service;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import rosetta.behaviours.ToJson;
 
 import javax.inject.Inject;
 import java.io.IOException;

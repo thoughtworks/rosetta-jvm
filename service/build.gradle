@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'application'
 
-mainClassName = "rosetta.Main"
+mainClassName = "rosetta.boot.Main"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
