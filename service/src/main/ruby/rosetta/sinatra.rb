@@ -8,8 +8,8 @@ module Rosetta
     register ::Sinatra::RespondWith
 
     def initialize
-      @injector = Java::ComGoogleInject::Guice.create_injector(Java::Rosetta::RepositoryModule.new)
-      @projects = @injector.get_instance Java::Rosetta::Projects.java_class
+      @injector = Java::ComGoogleInject::Guice.create_injector(Java::RosettaService::RepositoryModule.new)
+      @projects = @injector.get_instance Java::RosettaService::Projects.java_class
     end
 
     get '/ping' do
