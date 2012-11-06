@@ -39,13 +39,13 @@ describe 'application jar' do
     process.exit_code.should == 0
   end
 
-  xit "should have a ping resource" do
-    process = build_process "--port", "3000"
+  it "should have a ping resource" do
+    process = build_process "--port", "9999"
     process.start
 
     retry_count = 0
     begin
-      response = Rosetta::Client.new.get 'http://localhost:9999'
+      response = Rosetta::Client.new.get 'http://localhost:9999/ping'
     rescue Errno::ECONNREFUSED => e
       sleep 1
       retry_count = retry_count + 1
@@ -56,6 +56,6 @@ describe 'application jar' do
       end
     end
 
-    response.status.should == 200
+    response.code.should == 200
   end
 end
