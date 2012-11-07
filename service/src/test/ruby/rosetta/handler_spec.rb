@@ -23,4 +23,10 @@ describe Rosetta::Handler do
   context "#undefined" do
     it { lambda { subject.undefined }.should raise_error(NoMethodError) }
   end
+
+  describe "ClassMethods" do
+    subject { Rosetta::Handler.new {} }
+
+    it { lambda { subject.class.undefined }.should raise_error(NoMethodError) }
+  end
 end
