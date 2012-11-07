@@ -13,6 +13,10 @@ module Rosetta
 
       block.call handler_class
 
+      class << handler_class
+        undef method_missing
+      end
+
       handler_class.new
     end
   end
