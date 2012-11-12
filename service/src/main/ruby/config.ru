@@ -1,4 +1,4 @@
 require 'rubygems'
-require 'rosetta/sinatra'
+require 'rosetta/routing'
 
-run Rosetta::Sinatra
+run Rosetta::Routing
