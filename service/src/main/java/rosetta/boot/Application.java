@@ -56,7 +56,6 @@ public class Application {
             handler.setInitParameter("rackup", CharStreams.toString(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ru"))));
             handler.setResourceBase(Files.createTempDir().getCanonicalPath());
             handler.addServlet(org.jruby.rack.RackServlet.class, "/*");
-
             handler.addEventListener(new org.jruby.rack.RackServletContextListener());
             handlers.setHandlers(new Handler[]{handler});
             server.setHandler(handlers);

@@ -1,14 +1,14 @@
 require 'java'
-require 'rosetta/sinatra'
 require 'jackson/json'
+require 'rosetta/routing'
 
-describe "Rosetta::Sinatra" do
+describe "Rosetta::Routing" do
   require 'rack/test'
 
   include Rack::Test::Methods
 
   def app
-    app = Rosetta::Sinatra
+    app = Rosetta::Routing
     app.set :environment, :test
     app
   end
