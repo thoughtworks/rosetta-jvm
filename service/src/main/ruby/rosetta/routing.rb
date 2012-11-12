@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/respond_with'
 
+require 'rosetta/resources/projects'
 require 'rosetta/handler'
 
 module Rosetta
@@ -12,21 +13,7 @@ module Rosetta
       @projects = @injector.get_instance Java::RosettaService::Projects.java_class
     end
 
-    get '/ping' do
-    end
-
-    get '/projects/:id' do
-      @projects.find params[:id], Handler.new do |h|
-        h.found do |project|
-          respond_to do |f|
-            f.json { project.to_json }
-          end
-        end
-
-        h.not_found do
-          status 404
-        end
-      end
-    end
+    get('/ping') {}
+    get('/projects/:id') { |id| Rosetta::Resources::ProjectsResource.new(@projects, self).show(id) }
   end
 end
