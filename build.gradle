@@ -28,44 +28,61 @@ idea {
         def project = it.asNode()
 
         // Configure clojure source copying and AOT compilation
-        def clojureCompilerSettings = project.appendNode('component', [name: 'ClojureCompilerSettings'])
-        clojureCompilerSettings.appendNode('option', [name: 'COMPILE_CLOJURE', value: 'true'])
-        clojureCompilerSettings.appendNode('option', [name: 'CLOJURE_BEFORE', value: 'true'])
-        clojureCompilerSettings.appendNode('option', [name: 'COPY_CLJ_SOURCES', value: 'true'])
+        project.append(new NodeBuilder().component(name: 'ClojureCompilerSettings') {
+          option(name: 'COMPILE_CLOJURE', value: 'true')
+          option(name: 'CLOJURE_BEFORE', value: 'true')
+          option(name: 'COPY_CLJ_SOURCES', value: 'true')
+        })
 
         // Automatically set up Git support
-        def vcsDirectoryMappings = project.appendNode('component', [name: 'VcsDirectoryMappings'])
-        vcsDirectoryMappings.appendNode('mapping', [directory: '$PROJECT_DIR$', vcs: 'Git'])
+        project.append(new NodeBuilder().component(name: 'VcsDirectoryMappings') {
+          mapping(directory: '$PROJECT_DIR$', vcs: 'Git')
+        })
 
         // Disable annoying popup asking to configure frameworks
-        def frameworkDetectionExcludes = project.appendNode('component', [name: 'FrameworkDetectionExcludesConfiguration'])
-        frameworkDetectionExcludes.appendNode('type', [id: 'JRUBY'])
-        frameworkDetectionExcludes.appendNode('type', [id: 'Python'])
+        project.append(new NodeBuilder().component(name: 'FrameworkDetectionExcludesConfiguration') {
+          type(id: 'JRUBY')
+          type(id: 'Python')
+        })
 
         // Add run configurations
-        def runConfigurationManager = project.appendNode('component', [name: 'ProjectRunConfigurationManager'])
+        project.append(new NodeBuilder().component(name: 'ProjectRunConfigurationManager') {
+          buildConfiguration(delegate,
+              'service',
+              'rspec',
+              'org.jruby.Main',
+              'classpath:bin/rspec -Iservice/src/test/ruby service/src/test/ruby')
 
-        def testConfiguration = runConfigurationManager.appendNode('configuration', [default: 'false', factoryName: 'Application', name: 'service:rspec', type: 'Application'])
-        testConfiguration.appendNode('extension', [enabled: 'false', merge: 'false', name: 'coverage', runner: 'idea'])
-        testConfiguration.appendNode('option', [name: 'MAIN_CLASS_NAME', value: 'org.jruby.Main'])
-        testConfiguration.appendNode('option', [name: 'VM_PARAMETERS', value: '-DDEBUG=true'])
-        testConfiguration.appendNode('option', [name: 'PROGRAM_PARAMETERS', value: 'classpath:bin/rspec -Iservice/src/test/ruby service/src/test/ruby'])
-        testConfiguration.appendNode('option', [name: 'WORKING_DIRECTORY', value: 'file://$PROJECT_DIR$'])
-        testConfiguration.appendNode('option', [name: 'ALTERNATIVE_JRE_PATH_ENABLED', value: 'false'])
-        testConfiguration.appendNode('option', [name: 'ALTERNATIVE_JRE_PATH', value: ''])
-        testConfiguration.appendNode('option', [name: 'ENABLE_SWING_INSPECTOR', value: 'false'])
-        testConfiguration.appendNode('option', [name: 'ENV_VARIABLES'])
-        testConfiguration.appendNode('option', [name: 'PASS_PARENT_ENVS', value: 'true'])
-        testConfiguration.appendNode('module', [name: 'service'])
-        testConfiguration.appendNode('envs')
-        testConfiguration.appendNode('ConfigurationWrapper', [RunnerId: 'Debug'])
-        testConfiguration.appendNode('method')
-
-        def runnerSettings = testConfiguration.appendNode('RunnerSettings', [RunnerId: 'Debug'])
-        runnerSettings.appendNode('option', [name: 'DEBUG_PORT', value: '54451'])
-        runnerSettings.appendNode('option', [name: 'TRANSPORT', value: '0'])
-        runnerSettings.appendNode('option', [name: 'LOCAL', value: 'true'])
+          buildConfiguration(delegate,
+              'service',
+              'boot',
+              'rosetta.boot.Main')
+        })
       }
+    }
+  }
+}
+
+def buildConfiguration(builder, moduleName, runConfigurationName, mainClassName, programParameters = '') {
+  builder.configuration(default: 'false', factoryName: 'Application', name: moduleName + ':' + runConfigurationName, type: 'Application') {
+    extension(enabled: 'false', merge: 'false', name: 'coverage', runner: 'idea')
+    option(name: 'MAIN_CLASS_NAME', value: mainClassName)
+    option(name: 'VM_PARAMETERS', value: '-DDEBUG=true')
+    option(name: 'PROGRAM_PARAMETERS', value: programParameters)
+    option(name: 'WORKING_DIRECTORY', value: 'file://$PROJECT_DIR$')
+    option(name: 'ALTERNATIVE_JRE_PATH_ENABLED', value: 'false')
+    option(name: 'ALTERNATIVE_JRE_PATH', value: '')
+    option(name: 'ENABLE_SWING_INSPECTOR', value: 'false')
+    option(name: 'ENV_VARIABLES')
+    option(name: 'PASS_PARENT_ENVS', value: 'true')
+    module(name: moduleName)
+    envs()
+    ConfigurationWrapper(RunnerId: 'Debug')
+    method()
+    RunnerSettings(RunnerId: 'Debug') {
+      option(name: 'DEBUG_PORT', value: '54451')
+      option(name: 'TRANSPORT', value: '0')
+      option(name: 'LOCAL', value: 'true')
     }
   }
 }
