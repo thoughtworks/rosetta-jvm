@@ -28,25 +28,25 @@ idea {
         def project = it.asNode()
 
         // Configure clojure source copying and AOT compilation
-        project.append(new NodeBuilder().component(name: 'ClojureCompilerSettings') {
+        project.append(node().component(name: 'ClojureCompilerSettings') {
           option(name: 'COMPILE_CLOJURE', value: 'true')
           option(name: 'CLOJURE_BEFORE', value: 'true')
           option(name: 'COPY_CLJ_SOURCES', value: 'true')
         })
 
         // Automatically set up Git support
-        project.append(new NodeBuilder().component(name: 'VcsDirectoryMappings') {
+        project.append(node().component(name: 'VcsDirectoryMappings') {
           mapping(directory: '$PROJECT_DIR$', vcs: 'Git')
         })
 
         // Disable annoying popup asking to configure frameworks
-        project.append(new NodeBuilder().component(name: 'FrameworkDetectionExcludesConfiguration') {
+        project.append(node().component(name: 'FrameworkDetectionExcludesConfiguration') {
           type(id: 'JRUBY')
           type(id: 'Python')
         })
 
         // Add run configurations
-        project.append(new NodeBuilder().component(name: 'ProjectRunConfigurationManager') {
+        project.append(node().component(name: 'ProjectRunConfigurationManager') {
           buildConfiguration(delegate,
               'service',
               'rspec',
@@ -61,6 +61,10 @@ idea {
       }
     }
   }
+}
+
+def node() {
+  new NodeBuilder()
 }
 
 def buildConfiguration(builder, moduleName, runConfigurationName, mainClassName, programParameters = '') {
