@@ -1,3 +1,12 @@
+buildscript {
+  repositories {
+    mavenRepo name: 'clojars', url: 'http://clojars.org/repo'
+  }
+  dependencies {
+    classpath 'clojuresque:clojuresque:1.5.2'
+  }
+}
+
 allprojects {
   apply plugin: 'idea'
 
@@ -17,6 +26,12 @@ idea {
     ipr {
       withXml {
         def project = it.asNode()
+
+        // Configure clojure source copying and AOT compilation
+        def clojureCompilerSettings = project.appendNode('component', [name: 'ClojureCompilerSettings'])
+        clojureCompilerSettings.appendNode('option', [name: 'COMPILE_CLOJURE', value: 'true'])
+        clojureCompilerSettings.appendNode('option', [name: 'CLOJURE_BEFORE', value: 'true'])
+        clojureCompilerSettings.appendNode('option', [name: 'COPY_CLJ_SOURCES', value: 'true'])
 
         // Automatically set up Git support
         def vcsDirectoryMappings = project.appendNode('component', [name: 'VcsDirectoryMappings'])
