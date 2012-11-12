@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/respond_with'
 
-require 'rosetta/resources/projects'
+require 'rosetta/resources'
 require 'rosetta/handler'
 
 module Rosetta
@@ -14,6 +14,7 @@ module Rosetta
     end
 
     get('/ping') {}
-    get('/projects/:id') { |id| Rosetta::Resources::ProjectsResource.new(@projects, self).show(id) }
+    get('/projects/:id') { |id| Resources::ProjectsResource.new(@projects, self).show(id) }
+    get('/application/health') { Resources::HealthResource.new.show }
   end
 end
