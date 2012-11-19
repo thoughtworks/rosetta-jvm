@@ -1,1 +1,0 @@
-this.square = (x) -> x * x
