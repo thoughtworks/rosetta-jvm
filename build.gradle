@@ -56,7 +56,9 @@ idea {
           buildConfiguration(delegate,
               'service',
               'boot',
-              'rosetta.boot.Main')
+              'rosetta.boot.Main',
+              "--assets $projectDir/service/src/main/resources/assets",
+          )
         })
       }
     }

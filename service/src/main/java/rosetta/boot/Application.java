@@ -49,6 +49,7 @@ public class Application {
         @Provides
         public Server server(Arguments arguments) throws IOException, URISyntaxException {
             Server server = new Server(arguments.port());
+            System.setProperty("asset.root", arguments.assets());
 
             HandlerCollection handlers = new HandlerCollection();
 
