@@ -2,9 +2,11 @@ require 'httparty'
 
 module Rosetta
   class Client
-    def self.new
+    def self.new base_uri
       ::Class.new do
         include HTTParty
+
+        base_uri base_uri
       end
     end
   end

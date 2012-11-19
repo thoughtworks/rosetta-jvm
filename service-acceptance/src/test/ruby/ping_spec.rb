@@ -20,7 +20,7 @@ describe 'application jar' do
 
       retry_count = 0
       begin
-        response = Rosetta::Client.new.get 'http://localhost:9999/ping'
+        response = Rosetta::Client.new("http://localhost:9999").get '/ping'
       rescue Errno::ECONNREFUSED => e
         sleep 1
         retry_count = retry_count + 1

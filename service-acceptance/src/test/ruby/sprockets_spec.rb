@@ -12,7 +12,7 @@ describe "sprockets" do
 
       retry_count = 0
       begin
-        response = Rosetta::Client.new.get 'http://localhost:9999/assets/calculator.js'
+        response = Rosetta::Client.new("http://localhost:9999").get '/assets/calculator.js'
       rescue Errno::ECONNREFUSED => e
         sleep 1
         retry_count = retry_count + 1
