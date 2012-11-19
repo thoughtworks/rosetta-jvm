@@ -1,26 +1,18 @@
 require 'spec_helper'
-require 'childprocess'
-require 'tmpdir'
+require 'rhino'
 
-describe 'application jar' do
+describe "sprockets" do
   include Rosetta::Acceptance::DSL
 
-  resource "ping" do
-    it "should have a help menu" do
-      process = build_process "--help"
-      process.start
-      process.poll_for_exit(10)
+  resource "assets" do
+    it "should successfully compile coffeescript" do
 
-      process.exit_code.should == 0
-    end
-
-    it "should have a ping resource" do
       process = build_process "--port", "9999"
       process.start
 
       retry_count = 0
       begin
-        response = Rosetta::Client.new.get 'http://localhost:9999/ping'
+        response = Rosetta::Client.new.get 'http://localhost:9999/assets/calculator.js'
       rescue Errno::ECONNREFUSED => e
         sleep 1
         retry_count = retry_count + 1
@@ -32,6 +24,11 @@ describe 'application jar' do
       end
 
       response.code.should == 200
+
+      Rhino::Context.open do |context|
+        context.eval(response.body)
+        context.eval("square(3)").should == 9
+      end
     end
   end
 end
