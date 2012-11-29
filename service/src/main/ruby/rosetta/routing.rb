@@ -14,7 +14,7 @@ module Rosetta
     end
 
     get('/ping') {}
-    get('/projects/:id') { |id| Resources::ProjectsResource.new(@projects, self).show(id) }
+    get('/projects/:user/:repository') { |user, repository| Resources::ProjectsResource.new(@projects, self).show(user, repository) }
     get('/application/health') { Resources::HealthResource.new.show }
   end
 end
