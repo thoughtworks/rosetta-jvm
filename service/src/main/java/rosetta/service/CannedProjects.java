@@ -25,7 +25,11 @@ public class CannedProjects implements Projects {
         };
 
         this.projects = new HashMap<String, Project>();
-        projects.put("rails", new Project(projectToJson, "rails", listWith(new Language("ruby", 100))));
+        projects.put("rails", new Project(projectToJson, "rails", listWith(
+                new Language("ruby", 60),
+                new Language("python", 10),
+                new Language("javascript", 15),
+                new Language("clojure", 15))));
     }
 
     @Override public <T> T find(String id, LookupHandler<T, Project> handler) {

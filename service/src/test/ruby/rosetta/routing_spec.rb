@@ -20,7 +20,12 @@ describe "Rosetta::Routing" do
 
     last_response.should be_ok
 
-    JSON.parse(last_response.body.join).should == {"name" => "rails", "languages" => [{"name" => "ruby", "percentage" => 100}]}
+    JSON.parse(last_response.body.join).should == {"name" => "rails", "languages" => [
+      {"name" => "ruby", "percentage" => 60},
+      {"name" => "python", "percentage" => 10},
+      {"name" => "javascript", "percentage" => 15},
+      {"name" => "clojure", "percentage" => 15},
+    ]}
   end
 
   it "doesn't have a blah project /projects/blah" do
