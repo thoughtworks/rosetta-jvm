@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'java'
+require 'rosetta/handler'
 
 ProjectsProxy = Jython::Class.import "ProjectsProxy", :from => "rosetta.projects_proxy"
 
@@ -8,14 +9,19 @@ describe "ProjectsProxy" do
     object_mapper = Java::OrgCodehausJacksonMap::ObjectMapper.new
     projects_proxy = ProjectsProxy.new(object_mapper)
 
-    rails_project_info = projects_proxy.find_by_url("rails/rails")
+    expected_project = Java::RosettaService::Project.new(nil, "rails", "rails", [
+        Java::RosettaService::Language.new("Ruby", 7585665),
+        Java::RosettaService::Language.new("JavaScript", 78163)
+    ])
 
-    begin
-      full_name = rails_project_info.invoke("full_name")
-    rescue NativeException => exception
-      raise Jython::Exception.new(exception.cause)
+    handler = Class.new do
+      include Java::RosettaService::LookupHandler
+
+      def found project
+        project
+      end
     end
 
-    full_name.to_string.should == "rails/rails"
+    projects_proxy.find("rails", "rails", handler.new).should == expected_project
   end
 end
