@@ -13,23 +13,27 @@ describe "Rosetta::Routing" do
     app
   end
 
-  it "has a rails project /projects/rails" do
+  it "has a rails project /projects/rails/rails" do
     header "HTTP_ACCEPT", "application/json"
 
-    get '/projects/rails'
+    get '/projects/rails/rails'
 
     last_response.should be_ok
 
-    JSON.parse(last_response.body.join).should == {"name" => "rails", "languages" => [
-      {"name" => "ruby", "percentage" => 60},
-      {"name" => "python", "percentage" => 10},
-      {"name" => "javascript", "percentage" => 15},
-      {"name" => "clojure", "percentage" => 15},
-    ]}
+    JSON.parse(last_response.body.join).should == {
+        "user" => "rails",
+        "repository" => "rails",
+        "languages" => [
+          {"name" => "ruby", "percentage" => 60},
+          {"name" => "python", "percentage" => 10},
+          {"name" => "javascript", "percentage" => 15},
+          {"name" => "clojure", "percentage" => 15},
+        ]
+    }
   end
 
-  it "doesn't have a blah project /projects/blah" do
-    get '/projects/blah'
+  it "doesn't have a blah project /projects/blah/blah" do
+    get '/projects/blah/blah'
     last_response.should be_not_found
   end
 

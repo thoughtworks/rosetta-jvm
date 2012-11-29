@@ -6,8 +6,8 @@ module Rosetta
         @responder = responder
       end
 
-      def show id
-        @projects.find id, Handler.new { |h|
+      def show user, repository
+        @projects.find user, repository, Handler.new { |h|
           h.found do |project|
             @responder.respond_to do |f|
               f.json { project.to_json }
