@@ -1,5 +1,5 @@
 package rosetta.service;
 
 public interface Projects {
-    <T> T find(String id, LookupHandler<T, Project> handler);
+    <T> T find(String user, String repository, LookupHandler<T, Project> handler);
 }
