@@ -4,7 +4,11 @@ module Jython
   class Class
     def self.import clazz, opts
       interpreter = Java::OrgPythonUtil::PythonInterpreter.new
-      interpreter.exec("from #{opts[:from]} import #{clazz}")
+      begin
+        interpreter.exec("from #{opts[:from]} import #{clazz}")
+      rescue NativeException => exception
+        raise Jython::Exception.new(exception.cause)
+      end
       python_class = interpreter.get(clazz)
 
       ::Class.new do
@@ -12,7 +16,7 @@ module Jython
 
         define_method :initialize do |*args|
           python_arguments = args.map do |x|
-            Java::OrgPythonCore::PyString.new(x)
+            Java::OrgPythonCore::Py.java2py(x.to_java)
           end
           @instance = python_class.__call__ *python_arguments
         end
