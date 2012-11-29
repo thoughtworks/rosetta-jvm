@@ -7,12 +7,14 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static org.javafunk.funk.Literals.listWith;
+
 public class CannedProjects implements Projects {
     private final HashMap<String, Project> projects;
 
     @Inject
     public CannedProjects(final ObjectMapper objectMapper){
-        ToJson<Project> toJson = new ToJson<Project>() {
+        ToJson<Project> projectToJson = new ToJson<Project>() {
             @Override public String toJson(Project object) {
                 try {
                     return objectMapper.writeValueAsString(object);
@@ -23,7 +25,7 @@ public class CannedProjects implements Projects {
         };
 
         this.projects = new HashMap<String, Project>();
-        projects.put("rails", new Project(toJson, "rails"));
+        projects.put("rails", new Project(projectToJson, "rails", listWith(new Language("ruby", 100))));
     }
 
     @Override public <T> T find(String id, LookupHandler<T, Project> handler) {

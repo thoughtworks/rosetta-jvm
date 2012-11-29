@@ -1,5 +1,5 @@
 require 'java'
-require 'jackson/json'
+require 'json'
 require 'rosetta/routing'
 
 describe "Rosetta::Routing" do
@@ -19,7 +19,8 @@ describe "Rosetta::Routing" do
     get '/projects/rails'
 
     last_response.should be_ok
-    JSON.parse(last_response.body.join).should == {"name" => "rails"}
+
+    JSON.parse(last_response.body.join).should == {"name" => "rails", "languages" => [{"name" => "ruby", "percentage" => 100}]}
   end
 
   it "doesn't have a blah project /projects/blah" do
