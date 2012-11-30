@@ -9,7 +9,7 @@ describe "ProjectsProxy" do
     object_mapper = Java::OrgCodehausJacksonMap::ObjectMapper.new
     projects_proxy = ProjectsProxy.new(object_mapper)
 
-    expected_project = Java::RosettaService::Project.new(nil, "rails", "rails", [
+    expected_project = Java::RosettaService::Project.new(proc { "" }, "rails", "rails", [
         Java::RosettaService::Language.new("Ruby", 7585665),
         Java::RosettaService::Language.new("JavaScript", 78163)
     ])
@@ -22,6 +22,8 @@ describe "ProjectsProxy" do
       end
     end
 
-    projects_proxy.find("rails", "rails", handler.new).should == expected_project
+    actual_project = projects_proxy.find("rails", "rails", handler.new)
+
+    actual_project.should == expected_project
   end
 end

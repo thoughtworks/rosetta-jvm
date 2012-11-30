@@ -4,6 +4,7 @@ import sys
 from rosetta.service import Projects
 from rosetta.service import Language
 from rosetta.service import Project
+
 from java.util import HashMap
 
 class ProjectsProxy(Projects):
@@ -18,4 +19,4 @@ class ProjectsProxy(Projects):
 
         languages = [Language(entry.key, entry.value) for entry in languages_node.entrySet()]
 
-        return handler.found(Project(None, user, repository, languages))
+        return handler.found(Project(lambda x: self.json_mapper.writeValueAsString(x), user, repository, languages))

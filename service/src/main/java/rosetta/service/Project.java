@@ -3,6 +3,7 @@ package rosetta.service;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.python.google.common.base.Preconditions;
 import rosetta.behaviours.ToJson;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Project{
     private final List<Language> languages;
 
     public Project(ToJson<Project> toJson, String user, String repository, List<Language> languages) {
+        Preconditions.checkArgument(toJson != null);
         this.toJson = toJson;
         this.user = user;
         this.repository = repository;
