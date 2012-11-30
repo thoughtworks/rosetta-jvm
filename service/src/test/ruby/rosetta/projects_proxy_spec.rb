@@ -9,11 +9,6 @@ describe "ProjectsProxy" do
     object_mapper = Java::OrgCodehausJacksonMap::ObjectMapper.new
     projects_proxy = ProjectsProxy.new(object_mapper)
 
-    expected_project = Java::RosettaService::Project.new(proc { "" }, "rails", "rails", [
-        Java::RosettaService::Language.new("Ruby", 7585665),
-        Java::RosettaService::Language.new("JavaScript", 78163)
-    ])
-
     handler = Class.new do
       include Java::RosettaService::LookupHandler
 
@@ -24,6 +19,9 @@ describe "ProjectsProxy" do
 
     actual_project = projects_proxy.find("rails", "rails", handler.new)
 
-    actual_project.should == expected_project
+    actual_project.user.should == "rails"
+    actual_project.repository.should == "rails"
+    actual_project.languages.collect(&:name).should == %w(Ruby JavaScript)
+    actual_project.languages.all? { |l| l.should respond_to :percentage }
   end
 end
