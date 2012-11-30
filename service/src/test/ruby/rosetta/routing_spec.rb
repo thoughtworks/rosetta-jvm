@@ -10,7 +10,7 @@ describe "Rosetta::Routing" do
   def app
     app = Rosetta::Routing
     app.set :environment, :test
-    app
+    app.new(Java::RosettaService::StubRepositoryModule.new)
   end
 
   it "has a rails project /projects/rails/rails" do

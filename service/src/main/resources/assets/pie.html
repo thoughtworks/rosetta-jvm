@@ -41,7 +41,7 @@
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  d3.json("/projects/rails", function (error, data) {
+  d3.json("/projects/akiellor/rosetta-jvm", function (error, data) {
 
     var g = svg.selectAll(".arc")
         .data(pie(data.languages))
