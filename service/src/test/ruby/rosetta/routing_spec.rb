@@ -10,7 +10,7 @@ describe "Rosetta::Routing" do
   def app
     app = Rosetta::Routing
     app.set :environment, :test
-    app
+    app.new(Java::RosettaService::StubRepositoryModule.new)
   end
 
   it "has a rails project /projects/rails/rails" do
@@ -24,10 +24,10 @@ describe "Rosetta::Routing" do
         "user" => "rails",
         "repository" => "rails",
         "languages" => [
-          {"name" => "ruby", "percentage" => 60},
-          {"name" => "python", "percentage" => 10},
-          {"name" => "javascript", "percentage" => 15},
-          {"name" => "clojure", "percentage" => 15},
+          {"name" => "ruby", "weighting" => 60},
+          {"name" => "python", "weighting" => 10},
+          {"name" => "javascript", "weighting" => 15},
+          {"name" => "clojure", "weighting" => 15},
         ]
     }
   end
