@@ -8,8 +8,8 @@ module Rosetta
   class Routing < Sinatra::Base
     register Sinatra::RespondWith
 
-    def initialize
-      @injector = Java::ComGoogleInject::Guice.create_injector(Java::RosettaService::RepositoryModule.new)
+    def initialize repository_module = Java::RosettaService::LiveRepositoryModule.new
+      @injector = Java::ComGoogleInject::Guice.create_injector(repository_module)
       @projects = @injector.get_instance Java::RosettaService::Projects.java_class
     end
 
