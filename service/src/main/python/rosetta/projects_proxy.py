@@ -16,8 +16,11 @@ class ProjectsProxy(Projects):
     def find(self, user, repository, handler):
         try:
             f = urllib2.urlopen(self.BASE_GITHUB_URL + user + "/" + repository + "/languages")
-        except urllib2.HTTPError:
-            return handler.notFound()
+        except urllib2.HTTPError, e:
+            if e.code == 404:
+                return handler.notFound()
+            else:
+                raise e
 
         languages_node = self.json_mapper.readValue(f.read(), HashMap)
 
