@@ -14,7 +14,11 @@ class ProjectsProxy(Projects):
         self.json_mapper = json_mapper
 
     def find(self, user, repository, handler):
-        f = urllib2.urlopen(self.BASE_GITHUB_URL + user + "/" + repository + "/languages")
+        try:
+            f = urllib2.urlopen(self.BASE_GITHUB_URL + user + "/" + repository + "/languages")
+        except urllib2.HTTPError:
+            return handler.notFound()
+
         languages_node = self.json_mapper.readValue(f.read(), HashMap)
 
         languages = [Language(entry.key, entry.value) for entry in languages_node.entrySet()]
