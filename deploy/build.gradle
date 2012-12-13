@@ -4,7 +4,9 @@ apply plugin: 'idea'
 sourceSets {
   main {
     resources {
-      srcDirs 'lib/python/boto-2.6.0', 'lib/python/simplejson-2.6.2', 'src/main/python'
+      srcDirs 'lib/python/boto-2.6.0',
+          'lib/python/simplejson-2.6.2',
+          'src/main/python'
     }
   }
 }
