@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceSets {
+  main {
+    resources {
+      srcDirs 'lib/python/boto-2.6.0', 'lib/python/simplejson-2.6.2', 'src/main/python'
+    }
+  }
+}
+
+dependencies {
+  compile 'org.python:jython-standalone:2.5.3'
+}
+
+task(deploy, type: JavaExec) {
+  classpath runtimeClasspath
+  environment([
+      'JYTHONPATH': sourceSets.main.resources.srcDirs.collect { it.toString() }.join(":")
+  ])
+  main = "org.python.util.jython"
+  args = ["src/main/python/deploy.py"]
+}
+
+
