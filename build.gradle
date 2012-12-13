@@ -21,6 +21,10 @@ allprojects {
   }
 }
 
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.2'
+}
+
 idea {
   project {
     ipr {
