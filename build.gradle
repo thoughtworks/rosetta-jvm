@@ -13,6 +13,9 @@ allprojects {
   repositories {
     mavenCentral()
     maven {
+      url 'http://oss.sonatype.org/content/repositories/releases'
+    }
+    maven {
       url 'http://gemjars.org/maven'
     }
     maven {
@@ -67,6 +70,10 @@ idea {
       }
     }
   }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.2'
 }
 
 def node() {
