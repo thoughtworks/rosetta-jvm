@@ -1,20 +1,19 @@
 apply plugin: 'java'
 apply plugin: 'idea'
-//apply plugin: 'clojure'
+apply plugin: 'clojure'
 
-//warnOnReflection = false
-//aotCompile = false
+warnOnReflection = true
+aotCompile = true
 
 sourceSets {
   main {
-//    clojure {
-//      srcDirs 'src/main/clojure'
-//    }
+    clojure {
+      srcDirs 'src/main/clojure'
+    }
     resources {
       srcDirs 'lib/python/boto-2.6.0',
           'lib/python/simplejson-2.6.2',
-          'src/main/python',
-          'src/main/clojure'
+          'src/main/python'
     }
   }
 }
@@ -42,8 +41,7 @@ task(deploy, type: JavaExec) {
 
 task(deployPallet, type: JavaExec) {
   classpath runtimeClasspath
-  main "clojure.main"
-  args "-m", "rosettajvm.deploy", ""
+  main "rosettajvm.deploy"
 }
 
 
