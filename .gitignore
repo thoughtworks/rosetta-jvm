@@ -3,8 +3,6 @@
 *.pyc
 cookie
 .gradle/
-gradlew*
-gradle
 out
 build/
 .sass-cache/

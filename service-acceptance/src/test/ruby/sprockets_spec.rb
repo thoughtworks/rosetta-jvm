@@ -5,7 +5,7 @@ describe "sprockets" do
   include Rosetta::Acceptance::DSL
 
   resource "assets" do
-    it "should successfully compile coffeescript" do
+    xit "should successfully compile coffeescript" do
       response = client.get('/assets/ping.js')
 
       response.code.should == 200
