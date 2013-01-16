@@ -6,7 +6,7 @@ before_script:
   - "gem install travis-artifacts"  
 script: ./gradlew -q check
 after_success:
-  - "travis-artifacts upload --path service/build/distributions/service/zip --target_path artifacts/service-$TRAVIS_COMMIT.zip"
+  - "travis-artifacts upload --path service/build/distributions/service.zip --target-path artifacts/service-$TRAVIS_COMMIT.zip"
 env:
   global:
     - "JAVA_OPTS=\"-Xms128m -Xmx512m\""
