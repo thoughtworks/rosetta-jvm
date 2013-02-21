@@ -13,3 +13,6 @@ env:
     - "ARTIFACTS_S3_BUCKET=rosetta-jvm-artifacts"
     - secure: "mGERV0ZuUwjrFWnvjIBgfidUK2NiPwinEJoOr1yH5kvERUBMn1fJ55TfIDo3\n84lRAGPOh416H68a+KbZPgAaU7jLFulETN1X2fhFv1dVb9WMYhU5maoktPP5\nBJAhYK7lYxBa0eJEhmgMvZONNVfokItkUTKVqZobhICTJ0ThAEk="
     - secure: "hceECQsGgZJjeuAWd5oO9gnXGk/x79Ot2ScW7KE0cK8wUXH8jeFzo9pxeCLj\nocbr2o0Ivhy6L60PDGElEnZnsfbYDa9RUpFl0BOv8qVzun1eS29iKJN8oJLL\n+QvrP6VlA28AP4oM9UAGRbc63RigUfit9YGyF0lDwjfTbjoB5n0="
+notifications:
+  webhooks:
+    - "http://http://4tst.localtunnel.com/echo"
