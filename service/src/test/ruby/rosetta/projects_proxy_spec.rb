@@ -27,7 +27,7 @@ describe "ProjectsProxy" do
 
     actual_project.user.should == "rails"
     actual_project.repository.should == "rails"
-    actual_project.languages.collect(&:name).should == %w(Ruby JavaScript)
+    actual_project.languages.collect(&:name).should == %w(Ruby CoffeeScript JavaScript)
     actual_project.languages.all? { |l| l.should respond_to :weighting }
   end
 
