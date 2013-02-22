@@ -3,13 +3,17 @@ jdk:
   - openjdk6
 install: ./gradlew -q assemble
 before_script:
-  - "gem install travis-artifacts"  
+  - gem install travis-artifacts
 script: ./gradlew -q check
 after_success:
-  - "./upload-artifacts.sh"
+  - ./upload-artifacts.sh
 notifications:
   webhooks:
-    - "http://43yj.localtunnel.com"
+    urls:
+      - http://4ehq.localtunnel.com/echo
+    on_success: always
+    on_failure: never
+    on_start: false
 env:
   global:
     - "JAVA_OPTS=\"-Xms128m -Xmx512m\""
