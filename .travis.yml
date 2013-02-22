@@ -10,7 +10,7 @@ after_success:
 notifications:
   webhooks:
     urls:
-      - http://4ehq.localtunnel.com/echo
+      - http://44qz.localtunnel.com/echo
     on_success: always
     on_failure: never
     on_start: false
