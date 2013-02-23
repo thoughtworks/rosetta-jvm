@@ -3,7 +3,7 @@ buildscript {
     mavenRepo name: 'clojars', url: 'http://clojars.org/repo'
   }
   dependencies {
-    classpath 'clojuresque:clojuresque:1.5.2'
+    classpath 'clojuresque:clojuresque:1.5.4'
   }
 }
 

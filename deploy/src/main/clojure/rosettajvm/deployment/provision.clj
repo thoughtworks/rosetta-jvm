@@ -1,13 +1,13 @@
-(ns rosettajvm.deploy
+(ns rosettajvm.deployment.provision
   (:require pallet.node
             pallet.core
             pallet.compute
-            pallet.configure)
-  (:gen-class rosettajvm.deploy))
+            pallet.configure))
 
-(defn -main [& args]
+(defn start-node []
   (pallet.core/converge
     (pallet.core/group-spec "rosetta-jvm"
+
       :count 1
       :node-spec (pallet.core/node-spec
                    :image {
