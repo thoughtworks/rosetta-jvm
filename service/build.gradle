@@ -123,6 +123,7 @@ task(rspec, type: JavaExec) {
 }
 
 check.dependsOn << 'rspec'
+assemble.dependsOn << ['distTar', 'distZip']
 
 idea.module {
   scopes.RUNTIME.plus += configurations.rspec

@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'application'
+
+mainClassName = 'rosettajvm.tests.acceptance.Runner'
 
 evaluationDependsOn(':service')
 
@@ -29,3 +32,4 @@ task(rspec, type: JavaExec, dependsOn: [":service:distZip"]) {
 }
 
 check.dependsOn << "rspec"
+assemble.dependsOn << ['distTar', 'distZip']
