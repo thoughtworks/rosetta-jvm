@@ -1,5 +1,6 @@
 buildscript {
   repositories {
+    mavenCentral()
     mavenRepo name: 'clojars', url: 'http://clojars.org/repo'
   }
   dependencies {
@@ -9,6 +10,7 @@ buildscript {
 
 allprojects {
   apply plugin: 'idea'
+  apply plugin: 'project-report'
 
   repositories {
     mavenCentral()

@@ -19,4 +19,5 @@
   </root>
 
   <logger name="rosettajvm.deployment" level="INFO"/>
+  <logger name="pallet" level="DEBUG"/>
 </configuration>
