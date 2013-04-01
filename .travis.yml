@@ -1,9 +1,10 @@
 language: java
 jdk:
   - openjdk6
-install: ./gradlew -q assemble
+install: ./gradlew -q -Dorg.gradle.project.version=$TRAVIS_COMMIT assemble
 before_script:
   - gem install travis-artifacts
+  - gem install fpm
 script: ./gradlew -q check
 after_success:
   - ./upload-artifacts.sh

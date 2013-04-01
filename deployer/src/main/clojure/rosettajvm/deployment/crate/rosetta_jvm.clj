@@ -19,7 +19,7 @@
     :remote-file "artifacts/service.tar"
     :unpack :tar
     :tar-options "x")
-  #_(exec-checked-script "start-rosetta-jvm"
+  (exec-checked-script "start-rosetta-jvm"
     ("./service/bin/service" "--port" "8000" "&")))
 
 (def with-rosetta-jvm

@@ -4,6 +4,8 @@ apply plugin: 'idea'
 apply plugin: 'application'
 
 mainClassName = "rosetta.boot.Main"
+applicationName = "rosetta-jvm"
+archivesBaseName = "rosetta-jvm"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -15,6 +17,13 @@ defaultTasks('check')
 
 configurations {
   rspec
+  serviceTar
+  serviceZip
+}
+
+artifacts {
+  serviceTar distTar
+  serviceZip distZip
 }
 
 dependencies {

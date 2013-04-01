@@ -15,9 +15,9 @@
 
 (def application-nodes
   (api/group-spec "rosetta-jvm"
-    :extends [with-automated-admin-user
-              with-openjdk-7-jre
-              with-rosetta-jvm]
+    :extends [with-automated-admin-user]
+              ;;with-openjdk-7-jre
+              ;;with-rosetta-jvm]
     :node-spec ubuntu-node))
 
 (defn bring-node-up-on [provider]
