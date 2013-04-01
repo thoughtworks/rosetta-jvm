@@ -5,6 +5,7 @@ buildscript {
   }
   dependencies {
     classpath 'clojuresque:clojuresque:1.5.4'
+    classpath 'com.kenshoo:gradle-fpm:0.3'
   }
 }
 

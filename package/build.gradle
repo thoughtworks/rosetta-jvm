@@ -1,0 +1,56 @@
+apply plugin: 'idea'
+apply plugin: 'fpm-packaging'
+
+evaluationDependsOn(':service')
+
+ext {
+  applicationName = 'rosetta-jvm'
+  serviceTar = project(':service').configurations.serviceTar
+      .getArtifacts()
+      .getFiles()
+      .getSingleFile()
+  additionalContents = file('contents')
+  explodedDir = fileFrom(buildDir, "exploded")
+}
+
+packaging {
+  baseDir = fileFrom(buildDir, "exploded")
+  extraOptions = ['-a': 'all',
+                  '-m': 'rosetta-jvm@thoughtworks.com',
+                  '-p': applicationName + "_" + version + "_all.deb",
+                  '-n': applicationName,
+                  '--vendor': applicationName,
+                  '--provides': applicationName,
+                  '--url': 'https://github.com/thoughtworks/rosetta-jvm']
+  packageDir = fileFrom(buildDir, "packages")
+}
+
+task(clean, type: Delete) {
+  delete buildDir
+}
+
+task(prepare, dependsOn: ':service:assemble') << {
+  copy {
+    from tarTree(serviceTar).matching {
+      exclude '**/*.bat'
+    }
+    into temporaryDir
+  }
+  copy {
+    from fileFrom(temporaryDir, 'rosetta-jvm-' + version)
+    into fileFrom(explodedDir, 'opt/rosetta-jvm')
+  }
+  copy {
+    from additionalContents
+    into explodedDir
+  }
+}
+
+debian.dependsOn << 'prepare'
+
+task(assemble, dependsOn: 'debian')
+task(build, dependsOn: 'assemble')
+
+def fileFrom(File parent, String child) {
+  new File(parent, child)
+}
