@@ -3,9 +3,9 @@
 set -e
 
 cd service/build/distributions
-travis-artifacts upload --path service.tar --target-path $TRAVIS_COMMIT
+ls rosetta-jvm*.tar | xargs travis-artifacts upload --target-path $TRAVIS_COMMIT --path
 
 cd -
 
 cd deployer/build/distributions
-travis-artifacts upload --path deployer.tar --target-path $TRAVIS_COMMIT
+ls deployer*.tar | xargs travis-artifacts upload --target-path $TRAVIS_COMMIT --path
