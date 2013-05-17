@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+    adduser --system --group rosetta-jvm \
+      --quiet --gecos "rosetta-jvm service user"
+
+    chown -R --quiet rosetta-jvm:rosetta-jvm /opt/rosetta-jvm
+
+    #chown root:root /etc/init/rosetta-jvm.conf
+    #chown root:root /opt
+
+    start rosetta-jvm
+  ;;
+esac

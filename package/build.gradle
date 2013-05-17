@@ -10,17 +10,21 @@ ext {
       .getFiles()
       .getSingleFile()
   additionalContents = file('contents')
+  afterInstallScript = file('scripts/rosetta-jvm.postinst')
   explodedDir = fileFrom(buildDir, "exploded")
 }
 
 packaging {
-  baseDir = fileFrom(buildDir, "exploded")
+  baseDir = explodedDir
   extraOptions = ['-a': 'all',
                   '-m': 'rosetta-jvm@thoughtworks.com',
                   '-p': applicationName + "_" + version + "_all.deb",
                   '-n': applicationName,
+                  '--deb-user': 0,
+                  '--deb-group': 0,
                   '--vendor': applicationName,
                   '--provides': applicationName,
+                  '--after-install': afterInstallScript,
                   '--url': 'https://github.com/thoughtworks/rosetta-jvm']
   packageDir = fileFrom(buildDir, "packages")
 }
