@@ -19,7 +19,7 @@ allprojects {
       url 'http://oss.sonatype.org/content/repositories/releases'
     }
     maven {
-      url 'http://deux.gemjars.org'
+      url 'http://gemjars.org/maven'
     }
     maven {
       url 'http://clojars.org/repo'
