@@ -9,9 +9,6 @@ case "$1" in
 
     chown -R --quiet rosetta-jvm:rosetta-jvm /opt/rosetta-jvm
 
-    #chown root:root /etc/init/rosetta-jvm.conf
-    #chown root:root /opt
-
     start rosetta-jvm
   ;;
 esac
