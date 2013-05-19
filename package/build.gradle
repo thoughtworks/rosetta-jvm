@@ -1,5 +1,5 @@
 apply plugin: 'idea'
-apply plugin: 'fpm-packaging'
+apply plugin: 'java'
 
 evaluationDependsOn(':service')
 
@@ -12,25 +12,17 @@ ext {
   additionalContents = file('contents')
   afterInstallScript = file('scripts/rosetta-jvm.postinst')
   explodedDir = fileFrom(buildDir, "exploded")
+  packageDir = fileFrom(buildDir, "distributions")
 }
 
-packaging {
-  baseDir = explodedDir
-  extraOptions = ['-a': 'all',
-                  '-m': 'rosetta-jvm@thoughtworks.com',
-                  '-p': applicationName + "_" + version + "_all.deb",
-                  '-n': applicationName,
-                  '--deb-user': 0,
-                  '--deb-group': 0,
-                  '--vendor': applicationName,
-                  '--provides': applicationName,
-                  '--after-install': afterInstallScript,
-                  '--url': 'https://github.com/thoughtworks/rosetta-jvm']
-  packageDir = fileFrom(buildDir, "packages")
+configurations {
+  serviceDeb
 }
 
-task(clean, type: Delete) {
-  delete buildDir
+dependencies {
+  runtime "org.jruby:jruby-complete:1.7.3"
+  runtime "org.rubygems:fpm:0.4.26"
+  runtime "org.rubygems:arr-pm:0.0.8"
 }
 
 task(prepare, dependsOn: ':service:assemble') << {
@@ -48,12 +40,48 @@ task(prepare, dependsOn: ':service:assemble') << {
     from additionalContents
     into explodedDir
   }
+  mkdir packageDir
 }
 
-debian.dependsOn << 'prepare'
+task(distDeb, type: JavaExec, dependsOn: 'prepare') {
+  ext {
+    packageName = applicationName + "_" + version + "_all.deb"
+    packageFile = "$packageDir/$packageName"
+  }
 
-task(assemble, dependsOn: 'debian')
-task(build, dependsOn: 'assemble')
+  inputs.dir additionalContents
+  inputs.file afterInstallScript
+  inputs.file serviceTar
+  outputs.file packageFile
+
+  main "org.jruby.Main"
+  classpath runtimeClasspath
+  args = [
+      "-r", "$projectDir/src/main/ruby/fpm/package/dir.rb",
+      "-S", "fpm",
+      "-s", "dir",
+      "-t", "deb",
+      "-a", "all",
+      '-m', 'rosetta-jvm@thoughtworks.com',
+      "-n", applicationName,
+      "-p", fileFrom(packageDir, packageName),
+      "-C", explodedDir,
+      "--deb-user", 0,
+      "--deb-group", 0,
+      "--vendor", applicationName,
+      "--provides", applicationName,
+      "--after-install", afterInstallScript,
+      "--url", "https://github.com/thoughtworks/rosetta-jvm",
+      "--description", "Demo project for working with multiple JVM languages in one code base.",
+      "."]
+}
+
+assemble.dependsOn 'distDeb'
+build.dependsOn 'assemble'
+
+artifacts {
+  serviceDeb file(distDeb.packageFile)
+}
 
 def fileFrom(File parent, String child) {
   new File(parent, child)

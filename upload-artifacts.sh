@@ -9,3 +9,8 @@ cd -
 
 cd deployer/build/distributions
 ls deployer*.tar | xargs travis-artifacts upload --target-path $TRAVIS_COMMIT --path
+
+cd -
+
+cd package/build/distributions
+ls rosetta-jvm*.deb | xargs travis-artifacts upload --target-path $TRAVIS_COMMIT --path
