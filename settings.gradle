@@ -2,6 +2,6 @@ rootProject.name = 'rosetta-jvm'
 include(
   'service',
   'service-acceptance',
-  'package',
+  'service-package',
   'deployer'
 )

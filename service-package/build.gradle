@@ -54,6 +54,10 @@ task(distDeb, type: JavaExec, dependsOn: 'prepare') {
   inputs.file serviceTar
   outputs.file packageFile
 
+  doFirst {
+    delete(packageFile)
+  }
+
   main "org.jruby.Main"
   classpath runtimeClasspath
   args = [
