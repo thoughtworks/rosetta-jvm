@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+    adduser --system --group deployer \
+      --quiet --gecos "deployer service user"
+
+    chown -R --quiet deployer:deployer /opt/deployer
+
+    start deployer
+  ;;
+esac

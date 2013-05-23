@@ -3,5 +3,6 @@ include(
   'service',
   'service-acceptance',
   'service-package',
-  'deployer'
+  'deployer',
+  'deployer-package'
 )

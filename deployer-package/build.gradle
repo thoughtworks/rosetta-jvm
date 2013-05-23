@@ -1,0 +1,92 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+evaluationDependsOn(':service')
+
+ext {
+  applicationName = 'deployer'
+  serviceTar = project(':deployer').configurations.deployerTar
+      .getArtifacts()
+      .getFiles()
+      .getSingleFile()
+  additionalContents = file('contents')
+  afterInstallScript = file('scripts/deployer.postinst')
+  explodedDir = fileFrom(buildDir, "exploded")
+  packageDir = fileFrom(buildDir, "distributions")
+}
+
+configurations {
+  deployerDeb
+}
+
+dependencies {
+  runtime "org.jruby:jruby-complete:1.7.3"
+  runtime "org.rubygems:fpm:0.4.26"
+  runtime "org.rubygems:arr-pm:0.0.8"
+}
+
+task(prepare, dependsOn: ':service:assemble') << {
+  copy {
+    from tarTree(serviceTar).matching {
+      exclude '**/*.bat'
+    }
+    into temporaryDir
+  }
+  copy {
+    from fileFrom(temporaryDir, 'deployer-' + version)
+    into fileFrom(explodedDir, 'opt/deployer')
+  }
+  copy {
+    from additionalContents
+    into explodedDir
+  }
+  mkdir packageDir
+}
+
+task(distDeb, type: JavaExec, dependsOn: 'prepare') {
+  ext {
+    packageName = applicationName + "_" + version + "_all.deb"
+    packageFile = "$packageDir/$packageName"
+  }
+
+  inputs.dir additionalContents
+  inputs.file afterInstallScript
+  inputs.file serviceTar
+  outputs.file packageFile
+
+  doFirst {
+    delete(packageFile)
+  }
+
+  main "org.jruby.Main"
+  classpath runtimeClasspath
+  args = [
+      "-r", "$projectDir/src/main/ruby/fpm/package/dir.rb",
+      "-S", "fpm",
+      "-s", "dir",
+      "-t", "deb",
+      "-a", "all",
+      '-m', 'rosetta-jvm@thoughtworks.com',
+      "-n", applicationName,
+      "-p", fileFrom(packageDir, packageName),
+      "-C", explodedDir,
+      "--deb-user", 0,
+      "--deb-group", 0,
+      "--vendor", applicationName,
+      "--provides", applicationName,
+      "--after-install", afterInstallScript,
+      "--url", "https://github.com/thoughtworks/rosetta-jvm",
+      "--description", "Demo project for working with multiple JVM languages in one code base.",
+      "."]
+}
+
+assemble.dependsOn 'distDeb'
+build.dependsOn 'assemble'
+
+artifacts {
+  deployerDeb file(distDeb.packageFile)
+}
+
+def fileFrom(File parent, String child) {
+  new File(parent, child)
+}

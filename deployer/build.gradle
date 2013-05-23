@@ -21,6 +21,16 @@ configurations.all {
   }
 }
 
+configurations {
+  deployerTar
+  deployerZip
+}
+
+artifacts {
+  deployerTar distTar
+  deployerZip distZip
+}
+
 dependencies {
   compile 'org.clojure:clojure:1.4.0'
   compile 'org.clojure:tools.cli:0.2.2'
