@@ -21,7 +21,7 @@
               with-openjdk-7-jre
               with-deployer
               with-etc-default]
-    :node-spec (ubuntu-node)))
+    :node-spec ubuntu-node))
 
 (defn compute-provider []
   (pallet.compute/instantiate-provider
@@ -31,14 +31,14 @@
 
 (defn bring-node-up []
   (deref (api/converge
-           (merge (application-nodes) {:count 1})
+           (merge application-nodes {:count 1})
            :compute (compute-provider)
            :phase [:configure :install ]
            :async true)))
 
 (defn bring-node-down []
   (deref (api/converge
-           (merge (application-nodes) {:count 0})
+           (merge application-nodes {:count 0})
            :compute (compute-provider)
            :phase [:configure :install ]
            :async true)))
