@@ -7,7 +7,8 @@
         [cheshire.core :as json]
         [rosettajvm.deployment.health]
         [rosettajvm.deployment.utilities]
-        [rosettajvm.deployment.response]))
+        [rosettajvm.deployment.response]
+        [rosettajvm.deployment.provision]))
 
 (defn status []
   (success {:status "UP"
@@ -16,6 +17,7 @@
 
 (defn deploy [{:keys [commit] :as payload}]
   (log/info "Received deployment request with payload: \n" (hashmap-to-string payload))
+  (bring-node-up-on "aws")
   (success {:commit commit}))
 
 (defn unsupported []

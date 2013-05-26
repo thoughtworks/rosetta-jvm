@@ -37,6 +37,7 @@ dependencies {
   compile 'org.clojure:tools.logging:0.2.6'
 
   compile 'clj-time:clj-time:0.4.4'
+  compile 'environ:environ:0.4.0'
 
   compile 'compojure:compojure:1.1.5'
   compile 'ring:ring-jetty-adapter:1.1.7'
@@ -76,4 +77,12 @@ task(provision, type: JavaExec, dependsOn: ['classes']) {
   main 'rosettajvm.deployment.Provisioner'
   classpath runtimeClasspath
   args = [System.getProperty("args", "up aws").split(" ")].flatten()
+}
+
+task(selfDeploy, type: JavaExec, dependsOn: ['classes']) {
+  main 'rosettajvm.deployment.SelfDeploy'
+  classpath runtimeClasspath
+  systemProperty "pallet.aws.identity", System.getProperty("pallet.aws.identity")
+  systemProperty "pallet.aws.credential", System.getProperty("pallet.aws.credential")
+  args = [System.getProperty("args", "up").split(" ")].flatten()
 }
