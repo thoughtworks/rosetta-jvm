@@ -21,19 +21,23 @@
 (defn application-nodes [provider]
   (api/group-spec "rosetta-jvm"
     :extends [with-automated-admin-user
-              with-openjdk-7-jre]
-    ;;with-rosetta-jvm]
+              with-openjdk-7-jre
+              with-rosetta-jvm]
     :node-spec (ubuntu-node provider)))
 
 (defn bring-node-up-on [provider]
   (deref (api/converge
-           (merge (application-nodes provider) {:count 1})
-           :compute (configure/compute-service provider))))
+    (merge (application-nodes provider) {:count 1})
+    :compute (configure/compute-service provider)
+    :phase [:configure :install]
+    :async true)))
 
 (defn bring-node-down-on [provider]
   (deref (api/converge
-           (merge (application-nodes provider) {:count 0})
-           :compute (configure/compute-service provider))))
+    (merge (application-nodes provider) {:count 0})
+    :compute (configure/compute-service provider)
+    :phase [:configure :install]
+    :async true)))
 
 (defn -main [& args]
   (let [action (first args)

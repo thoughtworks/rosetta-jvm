@@ -42,7 +42,7 @@ dependencies {
   compile 'ring:ring-jetty-adapter:1.1.7'
   compile 'cheshire:cheshire:5.0.1'
 
-  compile 'com.palletops:pallet:0.8.0-beta.9'
+  compile 'com.palletops:pallet:0.8.0-beta.10'
   compile 'com.palletops:java-crate:0.8.0-beta.5'
   compile 'com.palletops:pallet-vmfest:0.3.0-alpha.5'
   compile 'com.palletops:pallet-jclouds:1.5.3'
