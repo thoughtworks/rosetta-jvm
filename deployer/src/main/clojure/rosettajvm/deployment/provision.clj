@@ -27,17 +27,23 @@
                 (with-rosetta-jvm commit-sha)]
       :node-spec (ubuntu-node provider))))
 
+(defn compute-provider []
+  (pallet.compute/instantiate-provider
+    "aws-ec2"
+    :identity (environ/env :pallet-aws-identity )
+    :credential (environ/env :pallet-aws-credential )))
+
 (defn bring-node-up-on [provider commit-sha]
   (deref (api/converge
            (merge (application-nodes provider commit-sha) {:count 1})
-           :compute (configure/compute-service provider)
+           :compute (compute-provider)
            :phase [:configure :install ]
            :async true)))
 
 (defn bring-node-down-on [provider]
   (deref (api/converge
            (merge (application-nodes provider) {:count 0})
-           :compute (configure/compute-service provider)
+           :compute (compute-provider)
            :phase [:configure :install ]
            :async true)))
 
