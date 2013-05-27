@@ -1,7 +1,8 @@
 (ns rosettajvm.deployment.crate.rosetta-jvm
   (:require [pallet.configure :as configure]
             [clojure.tools.logging :as logger])
-  (:use [pallet.api :only [plan-fn server-spec]]
+  (:use [rosettajvm.deployment.services :only [blobstore-service]]
+        [pallet.api :only [plan-fn server-spec]]
         [pallet.crate :only [defplan]]
         [pallet.actions :only [remote-file remote-directory directory exec-checked-script install-deb]]))
 
@@ -16,7 +17,7 @@
     (directory artifact-directory)
     (install-deb
       package-name
-      :blobstore (configure/blobstore-service-from-config-file :aws {})
+      :blobstore (blobstore-service)
       :blob {:container "rosetta-jvm-artifacts"
              :path (str commit-sha "/" artifact-name)})))
 

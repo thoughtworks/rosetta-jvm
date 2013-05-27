@@ -5,7 +5,8 @@
             [clojure.tools.logging :as logger])
   (:use [pallet.crate.automated-admin-user :only [with-automated-admin-user]]
         [rosettajvm.deployment.crate.openjdk-7-jre :only [with-openjdk-7-jre]]
-        [rosettajvm.deployment.crate.rosetta-jvm :only [with-rosetta-jvm]])
+        [rosettajvm.deployment.crate.rosetta-jvm :only [with-rosetta-jvm]]
+        [rosettajvm.deployment.services :only [compute-service]])
   (:gen-class :name "rosettajvm.deployment.Provisioner"))
 
 (defn ubuntu-node [provider]
@@ -29,23 +30,17 @@
                 (with-rosetta-jvm commit-sha)]
       :node-spec (ubuntu-node provider))))
 
-(defn compute-provider []
-  (pallet.compute/instantiate-provider
-    "aws-ec2"
-    :identity (environ/env :pallet-aws-identity )
-    :credential (environ/env :pallet-aws-credential )))
-
 (defn bring-node-up-on [provider commit-sha]
   (api/converge
     (merge (application-nodes provider commit-sha) {:count 1})
-    :compute (compute-provider)
+    :compute (compute-service)
     :phase [:configure :install ]
     :async true))
 
 (defn bring-node-down-on [provider]
   (api/converge
     (merge (application-nodes provider) {:count 0})
-    :compute (compute-provider)
+    :compute (compute-service)
     :phase [:configure :install ]
     :async true))
 
