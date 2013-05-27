@@ -4,12 +4,13 @@ set -e
 
 case "$1" in
   configure)
-    adduser --system --group deployer \
+    adduser --home /home/deployer --system --group deployer \
       --quiet --gecos "deployer service user"
 
     chown -R --quiet deployer:deployer /opt/deployer
 
-    sudo -u deployer ssh-keygen -N "" -C "RosettaJVM Deployer key" 
+    sudo -u deployer mkdir /home/deployer/.ssh
+    sudo -u deployer ssh-keygen -N "" -C "RosettaJVM Deployer key" -f /home/deployer/.ssh/id_rsa
 
     start deployer
   ;;
