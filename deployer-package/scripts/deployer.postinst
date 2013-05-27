@@ -9,6 +9,8 @@ case "$1" in
 
     chown -R --quiet deployer:deployer /opt/deployer
 
+    sudo -u deployer ssh-keygen -N "" -C "RosettaJVM Deployer key" 
+
     start deployer
   ;;
 esac
