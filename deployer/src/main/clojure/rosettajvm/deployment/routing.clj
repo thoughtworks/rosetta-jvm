@@ -1,5 +1,5 @@
 (ns rosettajvm.deployment.routing
-  (:require [clojure.tools.logging :as log])
+  (:require [clojure.tools.logging :as logger])
   (:use [compojure.core]
         [compojure.route]
         [compojure.handler]
@@ -16,7 +16,7 @@
                      :units :millis}}))
 
 (defn deploy [{:keys [commit] :as payload}]
-  (log/info "Received deployment request with payload: \n" (hashmap-to-string payload))
+  (logger/info "Received deployment request with payload: \n" (hashmap-to-string payload))
   (bring-node-down-on :aws)
   (bring-node-up-on :aws commit)
   (success {:commit commit}))

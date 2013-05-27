@@ -1,7 +1,8 @@
 (ns rosettajvm.deployment.provision
   (:require [environ.core :as environ]
             [pallet.api :as api]
-            [pallet.configure :as configure])
+            [pallet.configure :as configure]
+            [clojure.tools.logging :as logger])
   (:use [pallet.crate.automated-admin-user :only [with-automated-admin-user]]
         [rosettajvm.deployment.crate.openjdk-7-jre :only [with-openjdk-7-jre]]
         [rosettajvm.deployment.crate.rosetta-jvm :only [with-rosetta-jvm]])
@@ -29,6 +30,7 @@
       :node-spec (ubuntu-node provider))))
 
 (defn compute-provider []
+  (logger/infof "Current environment is: %s" (System/getenv))
   (pallet.compute/instantiate-provider
     "aws-ec2"
     :identity (environ/env :pallet-aws-identity )

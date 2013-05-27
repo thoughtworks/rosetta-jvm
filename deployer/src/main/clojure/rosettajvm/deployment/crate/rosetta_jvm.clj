@@ -1,6 +1,6 @@
 (ns rosettajvm.deployment.crate.rosetta-jvm
   (:require [pallet.configure :as configure]
-            [clojure.tools.logging :as logging])
+            [clojure.tools.logging :as logger])
   (:use [pallet.api :only [plan-fn server-spec]]
         [pallet.crate :only [defplan]]
         [pallet.actions :only [remote-file remote-directory directory exec-checked-script install-deb]]))
@@ -12,7 +12,7 @@
         artifact-directory "artifacts"
         artifact-name (str package-name "_" commit-sha "_all.deb")
         artifact-path (str artifact-directory "/" artifact-name)]
-    (logging/debugf "Fetching RosettaJVM service artifact with SHA %s" commit-sha)
+    (logger/debugf "Fetching RosettaJVM service artifact with SHA %s" commit-sha)
     (directory artifact-directory)
     (install-deb
       package-name
