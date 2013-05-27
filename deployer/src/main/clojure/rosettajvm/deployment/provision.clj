@@ -1,5 +1,6 @@
 (ns rosettajvm.deployment.provision
-  (:require [pallet.api :as api]
+  (:require [environ.core :as environ]
+            [pallet.api :as api]
             [pallet.configure :as configure])
   (:use [pallet.crate.automated-admin-user :only [with-automated-admin-user]]
         [rosettajvm.deployment.crate.openjdk-7-jre :only [with-openjdk-7-jre]]
