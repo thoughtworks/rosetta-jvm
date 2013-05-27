@@ -30,7 +30,6 @@
       :node-spec (ubuntu-node provider))))
 
 (defn compute-provider []
-  (logger/infof "Current environment is: %s" (System/getenv))
   (pallet.compute/instantiate-provider
     "aws-ec2"
     :identity (environ/env :pallet-aws-identity )

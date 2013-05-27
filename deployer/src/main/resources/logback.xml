@@ -19,7 +19,7 @@
   </root>
 
   <logger name="rosettajvm.deployment" level="INFO"/>
-  <logger name="pallet" level="INFO"/>
+  <logger name="pallet" level="DEBUG"/>
   <logger name="vmfest" level="INFO"/>
   <logger name="pallet.algo" level="INFO"/>
 </configuration>
