@@ -17,7 +17,8 @@
 
 (defn deploy [{:keys [commit] :as payload}]
   (log/info "Received deployment request with payload: \n" (hashmap-to-string payload))
-  (bring-node-up-on "aws")
+  (bring-node-down-on "aws")
+  (bring-node-up-on "aws" commit)
   (success {:commit commit}))
 
 (defn unsupported []

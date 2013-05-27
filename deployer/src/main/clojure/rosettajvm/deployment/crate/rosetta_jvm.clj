@@ -20,7 +20,7 @@
       :blob {:container "rosetta-jvm-artifacts"
              :path (str commit-sha "/" artifact-name)})))
 
-(def with-rosetta-jvm
+(defn with-rosetta-jvm [commit-sha]
   (server-spec
     :phases {:install (plan-fn
-                        (fetch-service-artifact "e9758ae3923669e22033b19e471e0bf8690583b2"))}))
+                        (fetch-service-artifact commit-sha))}))
