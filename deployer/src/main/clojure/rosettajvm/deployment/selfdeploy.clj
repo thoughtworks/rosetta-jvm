@@ -11,7 +11,7 @@
 (def ubuntu-node
   (api/node-spec
     :image {:os-family :ubuntu
-            :image-id "us-east-1/ami-0cdf4965"}
+            :image-id "us-east-1/ami-77147f1e"}
     :hardware {:hardware-id "t1.micro"}
     :network {:inbound-ports [22 8000]}))
 

@@ -36,23 +36,23 @@
     :credential (environ/env :pallet-aws-credential )))
 
 (defn bring-node-up-on [provider commit-sha]
-  (deref (api/converge
-           (merge (application-nodes provider commit-sha) {:count 1})
-           :compute (compute-provider)
-           :phase [:configure :install ]
-           :async true)))
+  (api/converge
+    (merge (application-nodes provider commit-sha) {:count 1})
+    :compute (compute-provider)
+    :phase [:configure :install ]
+    :async true))
 
 (defn bring-node-down-on [provider]
-  (deref (api/converge
-           (merge (application-nodes provider) {:count 0})
-           :compute (compute-provider)
-           :phase [:configure :install ]
-           :async true)))
+  (api/converge
+    (merge (application-nodes provider) {:count 0})
+    :compute (compute-provider)
+    :phase [:configure :install ]
+    :async true))
 
 (defn -main [& args]
   (let [action (first args)
         provider (keyword (first (rest args)))
         commit-sha (first (rest (rest args)))]
     (case action
-      "up" (bring-node-up-on provider commit-sha)
-      "down" (bring-node-down-on provider))))
+      "up" (deref (bring-node-up-on provider commit-sha))
+      "down" (deref (bring-node-down-on provider)))))

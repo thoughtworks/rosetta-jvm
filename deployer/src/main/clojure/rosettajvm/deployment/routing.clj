@@ -8,7 +8,8 @@
         [rosettajvm.deployment.health]
         [rosettajvm.deployment.utilities]
         [rosettajvm.deployment.response]
-        [rosettajvm.deployment.provision]))
+        [rosettajvm.deployment.provision]
+        [pallet.algo.fsmop :only [wait-for]]))
 
 (defn status []
   (success {:status "UP"
@@ -17,7 +18,7 @@
 
 (defn deploy [{:keys [commit] :as payload}]
   (logger/info "Received deployment request with payload: \n" (hashmap-to-string payload))
-  (bring-node-down-on :aws)
+  (wait-for (bring-node-down-on :aws))
   (bring-node-up-on :aws commit)
   (success {:commit commit}))
 
