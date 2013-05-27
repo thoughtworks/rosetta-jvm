@@ -10,7 +10,7 @@ after_success:
 notifications:
   webhooks:
     urls:
-      - "http://ec2-23-22-112-199.compute-1.amazonaws.com:8000/deploy"
+      - "http://ec2-50-16-70-84.compute-1.amazonaws.com:8000/deploy"
     on_success: always
     on_failure: never
     on_start: false
