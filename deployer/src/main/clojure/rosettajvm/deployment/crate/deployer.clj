@@ -1,5 +1,6 @@
 (ns rosettajvm.deployment.crate.deployer
-  (:require [pallet.configure :as configure]
+  (:require [rosettajvm.deployment.services :as services]
+            [pallet.configure :as configure]
             [pallet.api :as api]
             [pallet.crate :as crate]
             [pallet.actions :as actions]
@@ -16,7 +17,7 @@
     (actions/directory artifact-directory)
     (actions/install-deb
       package-name
-      :blobstore (configure/blobstore-service-from-config-file :aws {})
+      :blobstore (services/blobstore-service)
       :blob {:container "rosetta-jvm-artifacts"
              :path (str commit-sha "/" artifact-name)})))
 
