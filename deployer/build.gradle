@@ -76,6 +76,8 @@ assemble.dependsOn << ['distTar', 'distZip']
 task(provision, type: JavaExec, dependsOn: ['classes']) {
   main 'rosettajvm.deployment.Provisioner'
   classpath runtimeClasspath
+  systemProperty "pallet.aws.identity", System.getProperty("pallet.aws.identity")
+  systemProperty "pallet.aws.credential", System.getProperty("pallet.aws.credential")
   args = [System.getProperty("args", "up aws").split(" ")].flatten()
 }
 
