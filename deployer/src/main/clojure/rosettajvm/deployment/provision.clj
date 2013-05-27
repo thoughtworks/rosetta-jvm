@@ -19,7 +19,7 @@
               :network {:inbound-ports [22 8000]})))
 
 (defn application-nodes
-  ([provider]) (application-nodes provider "")
+  ([provider] (application-nodes provider ""))
   ([provider commit-sha]
     (api/group-spec "rosetta-jvm"
       :extends [with-automated-admin-user
